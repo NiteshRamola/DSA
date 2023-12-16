@@ -3,17 +3,18 @@ function longestCommonPrefix(strs: string[]): string {
         return "";
     }
 
-    strs.sort();
+    let prefix = strs[0];
 
-    const firstStr = strs[0];
-    const lastStr = strs[strs.length - 1];
+    for (let i = 1; i < strs.length; i++) {
+        let j = 0;
+        while (j < prefix.length && j < strs[i].length && prefix[j] === strs[i][j])         {
+            j++;
+        }
 
-    let prefix = "";
-    for (let i = 0; i < firstStr.length; i++) {
-        if (firstStr[i] === lastStr[i]) {
-            prefix += firstStr[i];
-        } else {
-            break;
+        prefix = prefix.substring(0, j);
+
+        if (prefix === "") {
+            return "";
         }
     }
 
