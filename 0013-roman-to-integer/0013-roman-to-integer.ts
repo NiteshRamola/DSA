@@ -11,9 +11,9 @@ function romanToInt(s: string): number {
 
     let result = 0;
     let currentSymbol, nextSymbol;
-    const length = s.length
+    // const length = s.length
 
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < s.length; i++) {
         currentSymbol = romanNumerals[s[i]];
         nextSymbol = romanNumerals[s[i + 1]];
 
