@@ -1,15 +1,11 @@
 function removeDuplicates(nums: number[]): number {
-    const uniqueSet = new Set<number>();
-
-    for (const num of nums) {
-        uniqueSet.add(num);
+  let i = 0;
+  for (let j = 1; j < nums.length; j++) {
+    if (nums[i] !== nums[j]) {
+      i++;
+      nums[i] = nums[j];
     }
-
-    const uniqueArray = Array.from(uniqueSet);
-
-    for (let i = 0; i < uniqueArray.length; i++) {
-        nums[i] = uniqueArray[i];
-    }
-
-    return uniqueArray.length;
+  }
+    
+  return i + 1;
 };
