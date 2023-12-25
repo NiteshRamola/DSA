@@ -1,11 +1,8 @@
 function strStr(haystack: string, needle: string): number {
-    const haystackLength = haystack.length;
-    const needleLength = needle.length;
-    
-    for(let i = 0; i <= haystackLength - needleLength; i++){
+    for(let i = 0; i <= haystack.length - needle.length; i++){
         let str = "";
         
-        for(let j=i; j < i + needleLength; j++){
+        for(let j=i; j < i + needle.length; j++){
             str += haystack[j]
         }
         
