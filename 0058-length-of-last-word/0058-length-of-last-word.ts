@@ -1,5 +1,5 @@
 function lengthOfLastWord(s: string): number {
-    const wordsArray = s.trim().split(" ");
+    const trimmed = s.trim();
     
-    return wordsArray[wordsArray.length -1].length;
+    return trimmed.length - trimmed.lastIndexOf(' ') - 1
 };
