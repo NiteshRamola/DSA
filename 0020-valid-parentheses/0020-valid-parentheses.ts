@@ -1,20 +1,16 @@
 function isValid(s: string): boolean {
     const stack: string[] = [];
-    const bracketPairs: { [key: string]: string } = {
-        ')': '(',
-        '}': '{',
-        ']': '['
-    };
-
-    for (const char of s) {
-        if (bracketPairs[char]) {
-            if (!stack.length || stack.pop() !== bracketPairs[char]) {
-                return false;
-            }
-        } else {
-            stack.push(char);
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] == '{') {
+            stack.push('}');
+        } else if (s[i] == '[') {
+            stack.push(']');
+        } else if (s[i] == '(') {
+            stack.push(')');
+        }
+        else if (stack.pop() !== s[i]) {
+            return false;
         }
     }
-
-    return stack.length === 0; 
+    return !stack.length;
 };
