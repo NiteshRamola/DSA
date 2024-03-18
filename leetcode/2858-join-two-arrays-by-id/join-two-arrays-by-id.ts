@@ -2,16 +2,17 @@ type JSONValue = null | boolean | number | string | JSONValue[] | { [key: string
 type ArrayType = { "id": number } & Record<string, JSONValue>;
 
 function join(arr1: ArrayType[], arr2: ArrayType[]): ArrayType[] {
-    let arr = [...arr1, ...arr2]
-    let result = {};
-    for(let i = 0; i < arr.length; i++){
-        let id = arr[i].id;
-        if(result[id]){
-            result[id] = {...result[id], ...arr[i]};
-        }else {
-            result[id] = arr[i];
+    const result = {};
+    for (let i = 0; i < arr1.length; i++) {
+        result[arr1[i].id] = arr1[i];
+    } 
+    for (let i = 0; i < arr2.length; i++) {
+        if (result[arr2[i].id]) {
+            for (const key in arr2[i]) result[arr2[i].id][key] = arr2[i][key];  
+        } else {
+            result[arr2[i].id] = arr2[i];
         }
-    }
+    } 
 
     return Object.values(result);
 };
