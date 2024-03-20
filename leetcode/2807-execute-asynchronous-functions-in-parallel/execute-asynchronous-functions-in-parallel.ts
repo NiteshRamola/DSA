@@ -1,20 +1,22 @@
 type Fn<T> = () => Promise<T>
 
 function promiseAll<T>(functions: Fn<T>[]): Promise<T[]> {
-    const n = functions.length;
-    const ans = new Array(n);
-    let c = 0;
-    return new Promise((reseolve, reject) => {
-        for (let i = 0; i < n; i++) {
-            functions[i]().then(res => {
-                ans[i] = res;
-                c++;
-                if (c === n) {
-                    reseolve(ans);
-                } 
-            }).catch(e => {
-                reject(e);
-            })
+	let results = [];
+
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < functions.length; i++) {
+            (async () => {
+                try {
+                    const result = await functions[i]();
+                    results[i] = result;
+
+                    if (functions.length === results.filter(el => el !== undefined).length) {
+                        resolve(results);
+                    }
+                } catch (err) {
+                    reject(err);
+                }
+            })();
         }
     })
 };
