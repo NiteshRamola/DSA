@@ -1,31 +1,29 @@
 class TimeLimitedCache {
-    private values: Object;
+    private values: Map<number, {value: number, expiration: ReturnType<typeof setTimeout>}>;
     constructor() {
-        this.values = {}
+        this.values = new Map();
     }
     
     set(key: number, value: number, duration: number): boolean {
-        let exists = false;
-        if(this.values[key]){
-            exists = true;
-            clearTimeout(this.values[key]?.timer)
+        const exists = this.values.has(key);
+        if(exists){
+            clearTimeout(this.values.get(key).expiration);
         }
 
-        let timer = setTimeout(() => {
-            delete this.values[key];
-        }, duration);
-
-        this.values[key] = {value, timer}
+        this.values.set(key, {
+            value,
+            expiration: setTimeout(() => this.values.delete(key), duration)
+        });
 
         return exists;
     }
     
     get(key: number): number {
-        return this.values[key]?.value || -1;
+        return this.values.has(key) ? this.values.get(key).value : -1;
     }
     
     count(): number {
-        return Object.keys(this.values)?.length;
+        return this.values.size;
     }
 }
 
