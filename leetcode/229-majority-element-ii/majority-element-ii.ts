@@ -11,6 +11,10 @@ function majorityElement(nums: number[]): number[] {
         if(!obj[nums[i]].pushed && obj[nums[i]].count > (nums.length/3)){
             arr.push(nums[i]);
             obj[nums[i]].pushed = true;
+
+            if(arr.length === 2){
+                break;
+            }
         }
     }
     
