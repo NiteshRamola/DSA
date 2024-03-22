@@ -7,15 +7,10 @@ function dominantIndex(nums: number[]): number {
             secondLargest = largestNum;
             largestNum = nums[i];
             largestIndex = i;
-        }else if(nums[i] > secondLargest && nums[i] !== largestNum){
+        }else if(nums[i] > secondLargest){
             secondLargest = nums[i];
         }
     }
 
-    console.log(largestNum, secondLargest)
-    if(largestNum !== secondLargest && (largestNum >= (secondLargest * 2))){
-        return largestIndex;
-    }else {
-        return -1;
-    }
+    return largestNum >= 2 * secondLargest ? largestIndex : -1
 };
