@@ -1,42 +1,40 @@
 class RandomizedSet {
-    private values: number[];
-    private valueToIndex: Map<number, number>;
-
+    private map: Map<number, number>;
+    private arr: number[];
     constructor() {
-        this.values = [];
-        this.valueToIndex = new Map<number, number>();
+        this.map = new Map();
+        this.arr = [];
     }
 
     insert(val: number): boolean {
-        if (this.valueToIndex.has(val)) {
-            return false;
+        const isExists = !this.map.has(val);
+        if(isExists){
+            this.arr.push(val);
+            this.map.set(val, this.arr.length -1);
         }
 
-        this.values.push(val);
-        this.valueToIndex.set(val, this.values.length - 1);
-        return true;
+        return isExists;
     }
 
     remove(val: number): boolean {
-        if (!this.valueToIndex.has(val)) {
-            return false;
+        const isExists = this.map.has(val);
+        if(isExists){
+            const value = this.map.get(val);
+            const lastValue = this.arr[this.arr.length - 1];
+
+            this.map.set(lastValue, value);
+            this.arr[value] = lastValue;
+            this.arr.length = this.arr.length - 1;
+
+            this.map.delete(val);
         }
 
-        const indexToRemove = this.valueToIndex.get(val)!;
-        const lastValue = this.values[this.values.length - 1];
-
-        this.values[indexToRemove] = lastValue;
-        this.valueToIndex.set(lastValue, indexToRemove);
-
-        this.values.pop();
-        this.valueToIndex.delete(val);
-
-        return true;
+        return isExists;
     }
 
     getRandom(): number {
-        const randomIndex = Math.floor(Math.random() * this.values.length);
-        return this.values[randomIndex];
+        const randomIndex = Math.floor(Math.random() * this.arr.length);
+        return this.arr[randomIndex]; 
     }
 }
 
