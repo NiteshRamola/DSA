@@ -3,25 +3,18 @@ function isAnagram(s: string, t: string): boolean {
         return false;
     }
 
-    const obj1 = {};
-    const obj2 = {};
+    const charCount = new Map();
 
-    for(let a of s){
-        if(obj1[a]) ++obj1[a];
-        else obj1[a] = 1; 
+    for (const char of s) {
+        charCount[char] = (charCount[char] || 0) + 1;
     }
 
-    for(let a of t){
-        if(obj2[a]) obj2[a]++;
-        else obj2[a] = 1; 
-    }
-
-    for(let o in obj1){
-        if(!(obj1[o] === obj2[o])){
+    for (const char of t) {
+        if (!charCount[char]) {
             return false;
         }
+        charCount[char]--;
     }
 
-
-    return true;
+    return Object.values(charCount).every(count => count === 0)
 };
