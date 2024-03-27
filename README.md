@@ -5,6 +5,5 @@ Fundamentals of Data Structures & Algorithm
 Big O Cheat Sheet  
 https://www.freecodecamp.org/news/big-o-cheat-sheet-time-complexity-chart/
 
-Roadmap & Question
-https://neetcode.io/roadmap
+Question
 https://neetcode.io/practice
