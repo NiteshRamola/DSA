@@ -1,15 +1,13 @@
 function twoSum(nums: number[], target: number): number[] {
-        const numIndicesMap: { [key: number]: number } = {};
+    const numIndexMap = new Map<number, number>();
 
     for (let i = 0; i < nums.length; i++) {
         const complement = target - nums[i];
 
-        if (numIndicesMap.hasOwnProperty(complement)) {
-            return [numIndicesMap[complement], i];
+        if (numIndexMap.has(complement)) {
+            return [numIndexMap.get(complement)!, i];
         }
 
-        numIndicesMap[nums[i]] = i;
+        numIndexMap.set(nums[i], i);
     }
-
-    return null;
 };
