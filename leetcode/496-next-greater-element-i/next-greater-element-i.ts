@@ -1,21 +1,24 @@
 function nextGreaterElement(nums1: number[], nums2: number[]): number[] {
-    const result = [];
-    for(let i = 0; i < nums1.length; i++){
-      let isPushed = false;
-      const index = nums2.indexOf(nums1[i]);
+  const map = {};
 
-      for(let j = index + 1; j < nums2.length; j++){
-        if(nums2[j] > nums1[i]){
-          result.push(nums2[j]);
-          isPushed = true;
-          break;
-        }
-      }
+  for (let i = 0; i < nums1.length; i++) {
+    map[nums1[i]] = i;
+  }
 
-      if(!isPushed){
-        result.push(-1);
-      }
+  let res = new Array(nums1.length).fill(-1);
+  const stack: number[] = [];
+
+  for (let i = 0; i < nums2.length; i++) {
+    let cur = nums2[i];
+    while (stack.length && cur > stack[stack.length - 1]) {
+      let val = stack.pop()!;
+      let idx = map[val];
+      res[idx] = cur;
     }
+    if (map.hasOwnProperty(cur)) {
+      stack.push(cur);
+    }
+  }
 
-    return result;
+  return res;
 };
