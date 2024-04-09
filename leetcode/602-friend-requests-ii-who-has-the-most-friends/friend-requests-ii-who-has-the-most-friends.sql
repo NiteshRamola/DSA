@@ -1,15 +1,18 @@
 -- Write your PostgreSQL query statement below
-SELECT requester_id AS id,
-count(requester_id) AS num
-FROM (
-    SELECT ra1.requester_id
-    FROM RequestAccepted ra1
-
+WITH FriendCounts AS (
+    SELECT requester_id AS id
+    FROM RequestAccepted
     UNION ALL
-
-    SELECT accepter_id
-    FROM RequestAccepted ra2
+    SELECT accepter_id AS id
+    FROM RequestAccepted
+), AggregateCounts AS (
+    SELECT id, COUNT(*) AS num
+    FROM FriendCounts
+    GROUP BY id
+), MaxFriendCount AS (
+    SELECT MAX(num) AS max_num
+    FROM AggregateCounts
 )
-GROUP BY 1
-ORDER BY num DESC 
-LIMIT 1;
+SELECT a.id, a.num
+FROM AggregateCounts a
+JOIN MaxFriendCount m ON a.num = m.max_num;
