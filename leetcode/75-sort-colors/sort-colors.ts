@@ -2,19 +2,19 @@
  Do not return anything, modify nums in-place instead.
  */
 function sortColors(nums: number[]): void {
-  const length = nums.length;
+  let l = 0;
+  let r = nums.length - 1;
+  let i = 0;
 
-  for (let i = 0; i < length - 1; i++) {
-    let swapped = false;
-    for (let j = 0; j < length - i - 1; j++) {
-      if (nums[j + 1] < nums[j]) {
-        swapped = true;
-        [nums[j], nums[j + 1]] = [nums[j + 1], nums[j]];
-      }
+  while (i <= r) {
+    if (nums[i] == 0) {
+      [nums[l], nums[i]] = [nums[i], nums[l]];
+      l += 1;
+    } else if (nums[i] == 2) {
+      [nums[r], nums[i]] = [nums[i], nums[r]];
+      r -= 1;
+      i -= 1;
     }
-
-    if (!swapped) {
-      break;
-    }
+    i += 1;
   }
 };
